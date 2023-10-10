@@ -33,7 +33,7 @@ class FileStorage:
         with open(self.__file_path, "w") as file:
             json.dumps(serialized_objs, file)
 
-    def relaod(self):
+    def reload(self):
         """ deserializes the JSON file to __objects"""
         try:
             with open(self.__file_path, "r") as file:
