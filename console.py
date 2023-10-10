@@ -3,8 +3,19 @@
 
 
 import cmd
-from models import storage
 from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.amenity import Amenity
+from models import storage
+
+
+class_dict = {"BaseModel": BaseModel, "User": User, "State": State,
+              "City": City, "Place": Place,
+              "Review": Review, "Amenity": Amenity}
 
 
 class HBNBCommand(cmd.Cmd):
@@ -16,26 +27,28 @@ class HBNBCommand(cmd.Cmd):
 
     def do_EOF(self, args):
         """EOF to exit the program"""
-        return True # exits the interpreter loop
+        return True  # exits the interpreter loop
 
     def emptyline(self):
         """Do nothing when empty line is entered"""
         pass
 
     def do_create(self, args):
-        """Creates a new instance of BaseModel, saves it and prints the id"""
+        """Creates a new instance of the class, saves it and prints the id"""
         # split args to get command and class name
-        class_name = args.split()
-        if not class_name:
+        argv = args.split()
+        if not argv:
             print("** class name missing **")
             return
-        if class_name != ['BaseModel']:
-            # atm, if class name is not BaseModel, it doesn't exist
-            # will need to be changed when other classes are implemented
+        class_name = argv[0]  # get class name
+        if class_name not in class_dict:
+            # checks if class name exists
             print("** class doesn't exist **")
             return
-        new_instance = BaseModel()
+        instance_class = class_dict[class_name]
+        new_instance = instance_class()
         new_instance.save
+        storage.save()
         print(new_instance.id)
         return
 
@@ -47,17 +60,15 @@ class HBNBCommand(cmd.Cmd):
         if not argv:
             print("** class name missing **")
             return
-        class_name = argv[0] # get class name
-        if class_name != 'BaseModel':
-            # atm, if class name is not BaseModel, it doesn't exist
-            # will need to be changed when other classes are implemented
+        class_name = argv[0]  # get class name
+        if class_name not in class_dict:
             print(class_name)
             print("** class does not exist **")
             return
         if len(argv) < 2:
             print("** instance id missing **")
             return
-        instance_id = argv[1]
+        instance_id = argv[1]  # get id
         instance_key = "{}.{}".format(class_name, instance_id)
         all_objects = storage.all()
         if instance_key in all_objects:
@@ -67,6 +78,32 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** no instance found **")
             return
+
+    def do_destroy(self, args):
+        """Deletes an instance based on the class name and id"""
+        argv = args.split()
+        if not argv:
+            print("** class name missing **")
+            return
+        class_name = argv[0]  # get class name
+        if class_name not in class_dict:
+            print(class_name)
+            print("** class does not exist **")
+            return
+        if len(argv) < 2:
+            print("** instance id missing **")
+            return
+        instance_id = argv[1]
+        instance_key = "{}.{}".format(class_name, instance_id)
+        if instance_key not in storage.all():
+            # checks if key is in storage dictionary
+            print("** no instance found **")
+            return
+        # delete the key
+        del storage.all()[instance_key]
+        # save
+        storage.save()
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()  # starts the interpreter loop
