@@ -39,7 +39,10 @@ class TestFileStorage(unittest.TestCase):
         obj = BaseModel()
         self.storage.new(obj)
         self.assertTrue(isinstance(self.storage._FileStorage__objects, dict))
-        self.assertIn("BaseModel." + obj.id, self.storage._FileStorage__objects)
+        self.assertIn(
+            "BaseModel." + obj.id,
+            self.storage._FileStorage__objects
+        )
 
     def test_save(self):
         """ Test the 'save' method. """

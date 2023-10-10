@@ -216,13 +216,16 @@ class TestHBNBCommand(unittest.TestCase):
             output = mock_stdout.getvalue()
             self.assertEqual(output, "** value missing **\n")
 
-    def test_update_non_existent_attribute(self):
+    def test_update_no_attribute(self):
         """ Test the 'update' command with a non-existent attribute. """
         obj = BaseModel()
         with patch("sys.stdout", new_callable=StringIO) as mock_stdout:
-            self.cmd.onecmd(f'update BaseModel {obj.id} non_existent_attr "new_value"')
+            self.cmd.onecmd(
+                f'update BaseModel {obj.id} non_existent_attr "new_value"'
+            )
             output = mock_stdout.getvalue()
             self.assertEqual(output, "")
+
 
 if __name__ == '__main__':
     unittest.main()

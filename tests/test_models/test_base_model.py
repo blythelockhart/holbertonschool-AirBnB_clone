@@ -84,16 +84,17 @@ class TestBaseModel(unittest.TestCase):
             mock_save.assert_called_once_with()
 
     def test_kwargs_calls_storage(self):
-    """ Check if 'new' is called when initializing with kwargs. """
-    kwargs = {
-        'id': 'test',
-        'created_at': '1995-01-31T10:00:00',
-        'updated_at': '1995-01-31T11:00:00',
-        'name': 'Test'
-    }
-    with patch.object(storage, 'new') as mock_new:
-        obj = BaseModel(**kwargs)
-        mock_new.assert_called_once_with(obj)
+        """ Check if 'new' is called when initializing with kwargs. """
+        kwargs = {
+            'id': 'test',
+            'created_at': '1995-01-31T10:00:00',
+            'updated_at': '1995-01-31T11:00:00',
+            'name': 'Test'
+        }
+        with patch.object(storage, 'new') as mock_new:
+            obj = BaseModel(**kwargs)
+            mock_new.assert_called_once_with(obj)
+
 
 if __name__ == '__main__':
     unittest.main()

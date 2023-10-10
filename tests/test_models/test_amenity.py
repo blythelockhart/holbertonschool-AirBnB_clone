@@ -26,7 +26,10 @@ class TestAmenity(unittest.TestCase):
 
     def test_str(self):
         """ Test the string representation of Amenity. """
-        self.assertEqual(str(amenity), "[Amenity] ({}) {}".format(amenity.id, amenity.__dict__))
+        self.assertEqual(
+            str(amenity),
+            "[Amenity] ({}) {}".format(amenity.id, amenity.__dict__)
+        )
 
 
 if __name__ == '__main__':

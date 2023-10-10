@@ -67,5 +67,6 @@ class TestCity(unittest.TestCase):
         self.assertEqual(obj['created_at'], created_at_str)
         self.assertEqual(obj['updated_at'], updated_at_str)
 
+
 if __name__ == '__main__':
     unittest.main()

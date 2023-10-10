@@ -86,7 +86,10 @@ class TestPlace(unittest.TestCase):
 
     def test_str(self):
         """ Test the string representation of Place. """
-        self.assertEqual(str(place), "[Place] ({}) {}".format(place.id, place.__dict__))
+        self.assertEqual(
+            str(place),
+            "[Place] ({}) {}".format(place.id, place.__dict__)
+        )
 
 
 if __name__ == '__main__':
