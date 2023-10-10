@@ -43,15 +43,15 @@ class FileStorage:
         from models.review import Review
         from models.amenity import Amenity
         class_dict = {"BaseModel": BaseModel, "User": User, "State": State,
-              "City": City, "Place": Place,
-              "Review": Review, "Amenity": Amenity}
+                      "City": City, "Place": Place,
+                      "Review": Review, "Amenity": Amenity}
         try:
             with open(self.__file_path, "r") as file:
                 # loads serialized objecs and sets them as data
                 # data should be a dictionary of dict reps of objects
                 data = json.load(file)
                 for key, value in data.items():
-                    class_name , obj_id = key.split('.')
+                    class_name, obj_id = key.split('.')
                     if class_name in class_dict:  # find class
                         instance_class = class_dict[class_name]
                     obj = instance_class(**value)
