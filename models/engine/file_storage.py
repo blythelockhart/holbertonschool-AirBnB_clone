@@ -31,10 +31,20 @@ class FileStorage:
         for key, value in self.__objects.items():
             serialized_objs[key] = value.to_dict()
         with open(self.__file_path, "w") as file:
-            json.dumps(serialized_objs, file)
+            json.dump(serialized_objs, file)
 
-    def relaod(self):
+    def reload(self):
         """ deserializes the JSON file to __objects"""
+        from models.base_model import BaseModel
+        from models.user import User
+        from models.state import State
+        from models.city import City
+        from models.place import Place
+        from models.review import Review
+        from models.amenity import Amenity
+        class_dict = {"BaseModel": BaseModel, "User": User, "State": State,
+              "City": City, "Place": Place,
+              "Review": Review, "Amenity": Amenity}
         try:
             with open(self.__file_path, "r") as file:
                 # loads serialized objecs and sets them as data
@@ -42,8 +52,9 @@ class FileStorage:
                 data = json.load(file)
                 for key, value in data.items():
                     class_name , obj_id = key.split('.')
-                    obj_class = globals()[class_name]
-                    obj = obj_class(**value)
+                    if class_name in class_dict:  # find class
+                        instance_class = class_dict[class_name]
+                    obj = instance_class(**value)
                     self.__objects[key] = obj
         except FileNotFoundError:
             pass
