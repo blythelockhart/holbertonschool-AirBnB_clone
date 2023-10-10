@@ -8,6 +8,7 @@ from models.base_model import BaseModel
 class TestUser(unittest.TestCase):
     """ Test the User class. """
     def setUp(self):
+        """ Set up each test. """
         user = User()
 
     def test_inheritance(self):

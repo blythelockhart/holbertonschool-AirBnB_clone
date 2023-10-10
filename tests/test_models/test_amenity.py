@@ -8,6 +8,7 @@ from models.base_model import BaseModel
 class TestAmenity(unittest.TestCase):
     """ Test the Amenity class. """
     def setUp(self):
+        """ Set up each test. """
         amenity = Amenity()
 
     def test_inheritance(self):

@@ -10,6 +10,7 @@ class TestCity(unittest.TestCase):
     """ Test the City class. """
 
     def setUp(self):
+        """ Set up each test. """
         self.state = State()
         self.city = City()
 

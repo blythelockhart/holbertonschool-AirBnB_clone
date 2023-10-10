@@ -8,6 +8,7 @@ from models.base_model import BaseModel
 class TestReview(unittest.TestCase):
     """ Test the Review class. """
     def setUp(self):
+        """ Set up each test. """
         review = Review()
 
     def test_inheritance(self):

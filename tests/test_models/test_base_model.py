@@ -11,6 +11,7 @@ class TestBaseModel(unittest.TestCase):
     """ Test the BaseModel class. """
 
     def setUp(self):
+        """ Set up each test. """
         self.base = BaseModel()
 
     def test_id(self):
