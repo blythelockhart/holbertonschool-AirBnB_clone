@@ -111,12 +111,10 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         class_name = argv[0]
-
         if class_name not in class_dict:
             print("** class doesn't exist **")
             return
         all_instances = []
-
         for key, value in storage.all().items():
             if key.split('.')[0] == class_name:
                 all_instances.append(str(value))
@@ -125,7 +123,6 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, args):
         """Updates an instance based on the class name and id"""
         argv = args.split()
-    
         if not argv:
             print("** class name missing **")
             return
@@ -133,23 +130,19 @@ class HBNBCommand(cmd.Cmd):
         if class_name not in class_dict:
             print("** class doesn't exist **")
             return
-    
         if len(argv) < 2:
             print("** instance id missing **")
             return
         instance_id = argv[1]  # Get instance id
         instance_key = "{}.{}".format(class_name, instance_id)
         all_objects = storage.all()
-    
         if instance_key not in all_objects:
             print("** no instance found **")
             return
-    
         if len(argv) < 3:
             print("** attribute name missing **")
             return
         attribute_name = argv[2]  # Get attribute name
-    
         if len(argv) < 4:
             print("** value missing **")
             return
@@ -157,7 +150,6 @@ class HBNBCommand(cmd.Cmd):
         # Check if the attribute can be updated (string, integer, float)
         instance = all_objects[instance_key]
         attribute_type = type(getattr(instance, attribute_name, None))
-    
         if attribute_type in [str, int, float]:
             # Cast the attribute value to the correct type
             if attribute_type == int:
